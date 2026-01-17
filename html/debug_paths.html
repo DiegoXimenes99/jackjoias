@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Paths</title>
+</head>
+<body>
+    <h1>Teste de Caminhos</h1>
+    <div id="results"></div>
+    
+    <script>
+        const paths = [
+            'assets/diamond.png',
+            './assets/diamond.png',
+            '../assets/diamond.png',
+            '/assets/diamond.png'
+        ];
+        
+        const results = document.getElementById('results');
+        
+        paths.forEach(path => {
+            const img = new Image();
+            img.src = path;
+            
+            img.onload = function() {
+                results.innerHTML += `<p style="color: green;">✅ SUCESSO: ${path}</p>`;
+                console.log('✅ Carregou:', path);
+            };
+            
+            img.onerror = function() {
+                results.innerHTML += `<p style="color: red;">❌ ERRO: ${path}</p>`;
+                console.error('❌ Falhou:', path);
+            };
+        });
+        
+        console.log('Base URL:', window.location.href);
+        console.log('Origin:', window.location.origin);
+    </script>
+</body>
+</html>

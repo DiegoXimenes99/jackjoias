@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Imagens - Jewelry Shop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .item {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .item img {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+        .item-name {
+            font-size: 12px;
+            color: #aaa;
+        }
+        .status {
+            margin-top: 5px;
+            font-size: 11px;
+        }
+        .success { color: #4ade80; }
+        .error { color: #f87171; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Teste de Carregamento de Imagens</h1>
+    <p>Este arquivo testa se todas as imagens estão carregando corretamente.</p>
+    
+    <div id="stats">
+        <p>Total: <span id="total">0</span> | Sucesso: <span id="success" class="success">0</span> | Erro: <span id="error" class="error">0</span></p>
+    </div>
+    
+    <div class="grid" id="grid"></div>
+
+    <script>
+        const items = [
+            'diamond', 'diamond_earring', 'diamond_earring_silver', 'diamond_necklace_silver', 
+            'diamond_necklace', 'diamond_ring', 'diamond_ring_silver',
+            'emerald', 'emerald_earring', 'emerald_earring_silver', 'emerald_necklace', 
+            'emerald_necklace_silver', 'emerald_ring', 'emerald_ring_silver',
+            'ruby', 'ruby_earring', 'ruby_earring_silver', 'ruby_necklace', 
+            'ruby_necklace_silver', 'ruby_ring', 'ruby_ring_silver',
+            'sapphire', 'sapphire_earring', 'sapphire_earring_silver', 'sapphire_necklace', 
+            'sapphire_necklace_silver', 'sapphire_ring', 'sapphire_ring_silver',
+            'gold_earring', 'gold_ring', 'goldchain', 'goldingot',
+            'silver_earring', 'silver_ring', 'silverchain', 'silverearring', 'silveringot'
+        ];
+
+        let successCount = 0;
+        let errorCount = 0;
+        const grid = document.getElementById('grid');
+
+        document.getElementById('total').textContent = items.length;
+
+        items.forEach(itemId => {
+            const div = document.createElement('div');
+            div.className = 'item';
+            
+            const img = document.createElement('img');
+            img.src = `assets/${itemId}.png`;
+            img.alt = itemId;
+            
+            const name = document.createElement('div');
+            name.className = 'item-name';
+            name.textContent = itemId;
+            
+            const status = document.createElement('div');
+            status.className = 'status';
+            status.textContent = 'Carregando...';
+            
+            img.onload = function() {
+                status.textContent = '✅ OK';
+                status.className = 'status success';
+                successCount++;
+                document.getElementById('success').textContent = successCount;
+            };
+            
+            img.onerror = function() {
+                status.textContent = '❌ ERRO';
+                status.className = 'status error';
+                errorCount++;
+                document.getElementById('error').textContent = errorCount;
+                img.style.display = 'none';
+            };
+            
+            div.appendChild(img);
+            div.appendChild(name);
+            div.appendChild(status);
+            grid.appendChild(div);
+        });
+    </script>
+</body>
+</html>
